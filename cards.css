@@ -1,0 +1,9 @@
+canvas {
+    background-color: #193d3f;
+    display: block; /* Remove extra space below canvas */
+}
+body, html {
+    margin: 0;
+    padding: 0;
+    overflow: hidden; /* Hide scroll bars */
+}
