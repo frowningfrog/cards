@@ -1,10 +1,11 @@
 function start() {
     const canvas = document.getElementById("canvas");
-    canvas.width = window.innerWidth;   canvas.height = window.innerHeight;
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
     ctx = canvas.getContext("2d");
     ctx.imageSmoothingEnabled = false;  // not fuzzy yay
-    const resize = canvas.height/360;
-    ctx.scale(resize, resize);      // scales to window nicely
+    const resize = canvas.height/1000;
+    ctx.scale(resize, resize);
 
     back = new Image();
     back.src = 'res/back.png';
@@ -15,7 +16,7 @@ function start() {
 
 function game() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.drawImage(back, canvas.width/5, 50, 62.5, 90.75);
+    ctx.drawImage(back, canvas.width/3, canvas.height/8, cardsize, cardsize*1.452);
 
     requestAnimationFrame(game)
 }
@@ -25,3 +26,5 @@ function load(elem){        //      make        //
         draw(elem);         //      things      //
     }                       //      load!!!     //
 }                           //      -—————-     //
+
+const cardsize = 250;
