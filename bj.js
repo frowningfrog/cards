@@ -10,13 +10,23 @@ function start() {
     back = new Image();
     back.src = 'res/back.png';
     load(back);
+    acespades = new Image();
+    acespades.v = 11;
+    acespades.src = 'res/acespades.png';
+    load(acespades);
+    queenspades = new Image();
+    queenspades.v = 10;
+    queenspades.src = 'res/queenspades.png';
+    load(queenspades);
 
     game();
 }
 
 function game() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.drawImage(back, canvas.width/4, canvas.height/8, w, h);
+    ctx.drawImage(back, (canvas.width/4)-(w/2), canvas.height/8, w, h);
+    ctx.drawImage(acespades, (canvas.width/6)*3-(w/2), canvas.height/8, w, h);
+    ctx.drawImage(queenspades, (canvas.width/6)*4.5-(w/2), canvas.height/8, w, h);
 
     requestAnimationFrame(game)
 }
