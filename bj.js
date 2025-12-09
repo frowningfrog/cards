@@ -4,7 +4,7 @@ function start() {
     canvas.height = window.innerHeight;
     ctx = canvas.getContext("2d");
     ctx.imageSmoothingEnabled = false;  // not fuzzy yay
-    const resize = 1.01;
+    const resize = 1.75;
     ctx.scale(resize, resize);
 
     back = new Image();
@@ -13,6 +13,9 @@ function start() {
     acespades = new Image();
     acespades.v = 11;
     acespades.src = 'res/acespades.png';
+
+    twospades = new Image();
+
     
     queenspades = new Image();
     queenspades.v = 10;
@@ -22,7 +25,7 @@ function start() {
 }
 
 function game() {
-    const m = canvas.width/2;
+    const m = canvas.width/4;
     const dhand = [
         acespades,
         queenspades
@@ -30,12 +33,12 @@ function game() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     //ctx.drawImage(back, m-(w/2), canvas.height/13, w, h);
     dhand.forEach(dcard => {
-        ctx.drawImage(dcard, m-(w/2), canvas.height/13, w, h);
+        ctx.drawImage(dcard, m-(w/5), canvas.height/13, w, h);
     });
 
     requestAnimationFrame(game)
 }
 
 const rat = 1.452;
-const w = 150;
+const w = 100;
 const h = w*rat;
