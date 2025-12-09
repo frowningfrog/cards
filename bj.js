@@ -4,8 +4,8 @@ function start() {
     canvas.height = window.innerHeight;
     ctx = canvas.getContext("2d");
     ctx.imageSmoothingEnabled = false;  // not fuzzy yay
-    const resize = canvas.height/1000;
-    //ctx.scale(resize, resize);
+    const resize = canvas.height/750;
+    ctx.scale(resize, resize);
 
     back = new Image();
     back.src = 'res/back.png';
@@ -38,12 +38,6 @@ function game() {
     requestAnimationFrame(game)
 }
 
-function load(elem){        //      make        //
-    elem.onload = () => {   //      sure        //
-        draw(elem);         //      things      //
-    }                       //      load!!!     //
-}                           //      -—————-     //
-
 const rat = 1.452;
-const w = 150;
+const w = 250;
 const h = w*rat;
