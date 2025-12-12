@@ -16,16 +16,16 @@ function game() {
         queenspades
     ];
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.drawImage(back, 0, canvas.height/125, w, h);
     var x = w;
-    dhand.forEach(dcard => {
+    ctx.drawImage(back, 0, canvas.height/125, w, h);
+    /*dhand.forEach(dcard => {
         ctx.drawImage(dcard, x, canvas.height/125, w, h);
         x+=w;
-    });
+    });*/
 
     requestAnimationFrame(game)
 }
 
 const rat = 1.452;
-const h = canvas.height/5;
-const w = h/rat;
+const w = (canvas.width/6 >= 50) ? 16 : canvas.width/15;
+const h = w*rat;
