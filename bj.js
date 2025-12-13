@@ -1,6 +1,6 @@
 function start() {
     const canvas = document.getElementById("canvas");
-    canvas.width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
+    canvas.width = /*(window.innerWidth > 0) ? */window.innerWidth/* : screen.width*/;
     canvas.height = window.innerHeight;
     ctx = canvas.getContext("2d");
     ctx.imageSmoothingEnabled = false;  // not fuzzy yay
@@ -39,7 +39,7 @@ function game() {
 
     ctx.font = "1px Arial";
     ctx.fillStyle = "green";
-    ctx.fillText("Hello World", 0, 1);
+    ctx.fillText("greetings programs", 0, 1);
 
     requestAnimationFrame(game)
 }
