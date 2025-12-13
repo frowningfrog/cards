@@ -12,7 +12,7 @@ function start() {
 
 function game() {
     const rat = 1.452;
-    const w = (canvas.width/100 < 7) ? canvas.width/100 : 6.25;
+    const w = 6;
     const h = w*rat;
     const dhand = [
         acespades,
