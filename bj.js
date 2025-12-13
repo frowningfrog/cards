@@ -12,7 +12,7 @@ function start() {
 
 function game() {
     const rat = 1.452;
-    const w = 6;
+    const w = (canvas.width/100 < 7) ? canvas.width/100 : 6;
     const h = w*rat;
     const dhand = [
         acespades,
@@ -36,6 +36,10 @@ function game() {
     ctx.strokeStyle = "green";
     ctx.rect(0, 0, canvas.width/30, canvas.height/30);
     ctx.stroke();
+
+    ctx.font = "1px Arial";
+    ctx.fillStyle = "green";
+    ctx.fillText("Hello World", 0, 1);
 
     requestAnimationFrame(game)
 }
