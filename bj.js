@@ -12,7 +12,7 @@ function start() {
 
 function game() {
     const rat = 1.452;
-    const w = (canvas.width/100 < 7) ? canvas.width/111 : 6;
+    const w = (canvas.width/100 < 7) ? canvas.width/100 : 7.5;
     const h = w*rat;
     const dhand = [
         acespades,
@@ -25,6 +25,7 @@ function game() {
         ctx.drawImage(dcard, x, 0, w, h);
         x+=w;
     });
+    ctx.rect(0, 0, canvas.width, canvas.height);
 
     requestAnimationFrame(game)
 }
