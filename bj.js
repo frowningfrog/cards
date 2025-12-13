@@ -19,10 +19,10 @@ function game() {
         queenspades
     ];
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    var x = w;
-    ctx.drawImage(back, 0, 0, w, h);
+    var x = 0;
+    //ctx.drawImage(back, 0, 0, w, h);
     dhand.forEach(dcard => {
-        ctx.drawImage(dcard, x, 0, w, h);
+        ctx.drawImage(dcard, dcard.frame, 0, 500, 726, x, 0, w, h);
         x+=w;
     });
     ctx.beginPath();
