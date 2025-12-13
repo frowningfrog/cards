@@ -12,7 +12,7 @@ function start() {
 
 function game() {
     const rat = 1.452;
-    const w = (canvas.width/100 < 7) ? canvas.width/100 : 7.5;
+    const w = (canvas.width/100 < 7) ? canvas.width/90 : 7.5;
     const h = w*rat;
     const dhand = [
         acespades,
@@ -25,7 +25,17 @@ function game() {
         ctx.drawImage(dcard, x, 0, w, h);
         x+=w;
     });
-    ctx.rect(0, 0, canvas.width, canvas.height);
+    ctx.beginPath();
+    ctx.lineWidth = 2;
+    ctx.strokeStyle = "black";
+    ctx.rect(0, 0, canvas.width/25, canvas.height/25);
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.lineWidth = 0.5;
+    ctx.strokeStyle = "green";
+    ctx.rect(0, 0, canvas.width/25, canvas.height/25);
+    ctx.stroke();
 
     requestAnimationFrame(game)
 }
