@@ -12,7 +12,7 @@ function start() {
 
 function game() {
     const rat = 1.452;
-    const w = (window.mobileCheck === true) ? 15 : 6;
+    const w = (window.mobileCheck == true) ? 15 : 6;
     const h = w*rat;
     const dhand = [
         acespades,
