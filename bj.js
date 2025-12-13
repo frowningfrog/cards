@@ -4,7 +4,7 @@ function start() {
     canvas.height = window.innerHeight;
     ctx = canvas.getContext("2d");
     ctx.imageSmoothingEnabled = false;  // not fuzzy yay
-    const resize = 25;
+    const resize = 30;
     ctx.scale(resize, resize);
 
     game();
@@ -12,7 +12,7 @@ function start() {
 
 function game() {
     const rat = 1.452;
-    const w = (canvas.width/100 < 7) ? canvas.width/90 : 7.5;
+    const w = (canvas.width/100 < 7) ? canvas.width/100 : 6.25;
     const h = w*rat;
     const dhand = [
         acespades,
@@ -28,13 +28,13 @@ function game() {
     ctx.beginPath();
     ctx.lineWidth = 2;
     ctx.strokeStyle = "black";
-    ctx.rect(0, 0, canvas.width/25, canvas.height/25);
+    ctx.rect(0, 0, canvas.width/30, canvas.height/30);
     ctx.stroke();
 
     ctx.beginPath();
     ctx.lineWidth = 0.5;
     ctx.strokeStyle = "green";
-    ctx.rect(0, 0, canvas.width/25, canvas.height/25);
+    ctx.rect(0, 0, canvas.width/30, canvas.height/30);
     ctx.stroke();
 
     requestAnimationFrame(game)
