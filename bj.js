@@ -39,7 +39,7 @@ function game() {
 
     ctx.font = "1px Arial";
     ctx.fillStyle = "green";
-    ctx.fillText("check check", 1, 1);
+    ctx.fillText("equal to", 1, 1);
 
     requestAnimationFrame(game)
 }
