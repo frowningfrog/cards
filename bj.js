@@ -12,7 +12,7 @@ function start() {
 
 function game() {
     const rat = 1.452;
-    const w = (canvas.width/100 < 7) ? canvas.width/100 : 6;
+    const w = (canvas.width/100 < 6) ? 10 : 6;
     const h = w*rat;
     const dhand = [
         acespades,
@@ -39,7 +39,7 @@ function game() {
 
     ctx.font = "1px Arial";
     ctx.fillStyle = "green";
-    ctx.fillText("greetings programs", 0, 1);
+    ctx.fillText("derezzed", 1, 1);
 
     requestAnimationFrame(game)
 }
