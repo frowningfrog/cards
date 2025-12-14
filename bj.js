@@ -20,11 +20,17 @@ function game() {
     ];
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     var x = 0;
-    //ctx.drawImage(back, 0, 0, w, h);
+    
     dhand.forEach(dcard => {
+        if(x==0){
+            dcard.frame = 500;
+        }else{
+            dcard.frame = 0;
+        }
         ctx.drawImage(dcard, dcard.frame, 0, 500, 726, x, 0, w, h);
         x+=w;
     });
+
     ctx.beginPath();
     ctx.lineWidth = 2;
     ctx.strokeStyle = "black";
