@@ -12,7 +12,7 @@ function start() {
 
 function game() {
     const rat = 1.452;
-    const w = (canvas.width > 600 && canvas.height > 1000) ? canvas.width/100 : 6;
+    const w = (canvas.width > 600 && canvas.height > 1000) ? canvas.width/100 : 5;
     const h = w*rat;
     const dhand = [
         acespades,
@@ -20,15 +20,22 @@ function game() {
     ];
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     var x = 0;
+    var y = 0;
+    let f = 0;
     
     dhand.forEach(dcard => {
         if(x==0){
-            dcard.frame = 500;
+            f = 500;
         }else{
-            dcard.frame = 0;
-        }
-        ctx.drawImage(dcard, dcard.frame, 0, 500, 726, x, 0, w, h);
+            f = 0;
+        };
+        ctx.drawImage(dcard, f, 0, 500, 726, ((canvas.width/60)-((dhand.length*w)/2))+x, 1.5, w, h);
         x+=w;
+    });
+
+    deck.forEach(card => {
+        ctx.drawImage(card, f, 0, 500, 726, ((canvas.width/60)-((deck.length*w)/2))+y, 11, w, h);
+        y+=w;
     });
 
     ctx.beginPath();
