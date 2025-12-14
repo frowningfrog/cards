@@ -21,6 +21,13 @@ twospades.frame = 0;
 deck.push(twospades);
 load(twospades);
 
+threespades = new Image();
+threespades.v = 3;
+threespades.src = 'res/3spades.png';
+threespades.frame = 0;
+deck.push(threespades);
+load(threespades);
+
 queenspades = new Image();
 queenspades.v = 10;
 queenspades.src = 'res/queenspades.png';
