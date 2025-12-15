@@ -28,6 +28,13 @@ threespades.frame = 0;
 deck.push(threespades);
 load(threespades);
 
+fourspades = new Image();
+fourspades.v = 4;
+fourspades.src = 'res/4spades.png';
+fourspades.frame = 0;
+deck.push(fourspades);
+load(fourspades);
+
 queenspades = new Image();
 queenspades.v = 10;
 queenspades.src = 'res/queenspades.png';

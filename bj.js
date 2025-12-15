@@ -21,24 +21,23 @@ function game() {
         queenspades
     ];
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    var t = 0;
-    var b = 0;
+    function form(pile) {
+        return midx-(w*(pile.length/2));
+    }
     let f = 0;
-    
-    dhand.forEach(dcard => {
-        if(t==0){
+
+    for(let c=0; c<dhand.length; c++){
+        if(c==0){
             f = 500;
         }else{
             f = 0;
         };
-        ctx.drawImage(dcard, f, 0, 500, 726, (midx-((dhand.length*w)/2))+t, midy/5, w, h);
-        t+=w;
-    });
+        ctx.drawImage(dhand[c], f, 0, 500, 726, form(dhand)+(w*c), midy/6, w, h);
+    }
 
-    deck.forEach(card => {
-        ctx.drawImage(card, f, 0, 500, 726, (midx-((deck.length*w)/2))+b, midy*1.05, w, h);
-        b+=w;
-    });
+    for(let c=0; c<deck.length; c++){
+        ctx.drawImage(deck[c], f, 0, 500, 726, form(deck)+(w*c), midy, w, h);
+    }
 
     ctx.beginPath();
     ctx.lineWidth = 2;
@@ -54,7 +53,7 @@ function game() {
 
     ctx.font = "1px Arial";
     ctx.fillStyle = "green";
-    ctx.fillText(canvas.width + " " + canvas.height, 1, 1);
+    ctx.fillText(canvas.width + " " + canvas.height + " " + midx, 1, 1);
 
     requestAnimationFrame(game)
 }
