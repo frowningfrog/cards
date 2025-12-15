@@ -22,13 +22,19 @@ function game() {
         queenspades,
         queenspades
     ];
+    const phand = [
+        threeclubs,
+        acespades,
+        queenhearts,
+        jackdiamonds
+    ];
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     function form(pile) {
         if(midx-(w*pile.length/2) > .5){
             return (midx-(w*pile.length)/2);
         }else{
-            return w/3.5;
-        }        
+            return w/4;
+        }
     }
     function space(pile) {
         if(midx/pile.length*1.5 <= w) {
@@ -48,8 +54,8 @@ function game() {
         ctx.drawImage(dhand[c], f, 0, 500, 726, form(dhand)+space(dhand)*c, midy/6, w, h);
     }
 
-    for(let c=0; c<deck.length; c++){
-        ctx.drawImage(deck[c], f, 0, 500, 726, form(deck)+space(deck)*c, midy, w, h);
+    for(let c=0; c<phand.length; c++){
+        ctx.drawImage(phand[c], f, 0, 500, 726, form(phand)+space(phand)*c, midy*0.9, w, h);
     }
 
     ctx.beginPath();
