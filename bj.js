@@ -18,11 +18,24 @@ function game() {
     const h = w*rat;
     const dhand = [
         acespades,
+        queenspades,
+        queenspades,
         queenspades
     ];
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     function form(pile) {
-        return midx-(w*(pile.length/2));
+        if(midx-(w*pile.length/2) > .5){
+            return (midx-(w*pile.length)/2);
+        }else{
+            return w/3.5;
+        }        
+    }
+    function space(pile) {
+        if(midx/pile.length*1.5 <= w) {
+            return midx/pile.length*1.5;
+        }else{
+            return w;
+        }
     }
     let f = 0;
 
@@ -32,11 +45,11 @@ function game() {
         }else{
             f = 0;
         };
-        ctx.drawImage(dhand[c], f, 0, 500, 726, form(dhand)+(w*c), midy/6, w, h);
+        ctx.drawImage(dhand[c], f, 0, 500, 726, form(dhand)+space(dhand)*c, midy/6, w, h);
     }
 
     for(let c=0; c<deck.length; c++){
-        ctx.drawImage(deck[c], f, 0, 500, 726, form(deck)+(w*c), midy, w, h);
+        ctx.drawImage(deck[c], f, 0, 500, 726, form(deck)+space(deck)*c, midy, w, h);
     }
 
     ctx.beginPath();

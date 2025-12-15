@@ -35,6 +35,13 @@ fourspades.frame = 0;
 deck.push(fourspades);
 load(fourspades);
 
+fivespades = new Image();
+fivespades.v = 4;
+fivespades.src = 'res/5spades.png';
+fivespades.frame = 0;
+deck.push(fivespades);
+load(fivespades);
+
 queenspades = new Image();
 queenspades.v = 10;
 queenspades.src = 'res/queenspades.png';
