@@ -62,11 +62,11 @@ function play() {
 
     let textsize = 1.5;
 
-    if((midy*2) > 1050 && (midx*2) > 800){
+    if(canvas.width > 1050 && canvas.height > 800){
         textsize = 4;
     }
 
-    ctx.font = textsize+"px Arial";
+    ctx.font = textsize+"px Calibri";
     ctx.fillStyle = "green";
 
     ctx.fillText("Dealer: " + dtotal, midx-((dhand.length*w)/2), midy*0.25);
@@ -96,7 +96,6 @@ function play() {
         phand.push(draw());
         dhand.push(draw());
         phand.push(draw());
-        phand.push(acespades);
     }
 
     function draw() {
