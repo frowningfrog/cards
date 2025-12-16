@@ -37,8 +37,8 @@ function game() {
         }
     }
     function space(pile) {
-        if(midx/pile.length*1.5 <= w) {
-            return midx/pile.length*1.5;
+        if(midx/pile.length*1.45 <= w) {
+            return midx/pile.length*1.45;
         }else{
             return w;
         }
@@ -70,9 +70,9 @@ function game() {
     ctx.rect(0, 0, midx*2, midy*2);
     ctx.stroke();
 
-    ctx.font = "1px Arial";
+    ctx.font = "2px Arial";
     ctx.fillStyle = "green";
-    ctx.fillText("greetings, programs", midx*0.6, midy*1.6);
+    ctx.fillText("greetings, programs", midx-(midx*0.6), midy*1.6);
 
     requestAnimationFrame(game)
 }
