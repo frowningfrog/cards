@@ -64,7 +64,7 @@ function game() {
 
     ctx.font = midx/11+"px Arial";
     ctx.fillStyle = "green";
-    ctx.fillText("greetings, programs", midx*0.63, midy*1.6);
+    ctx.fillText(canvas.width + " " + canvas.height, midx*0.63, midy*1.6);
 
     function round() {
         dhand.push(draw());
