@@ -70,9 +70,9 @@ function game() {
     ctx.rect(0, 0, midx*2, midy*2);
     ctx.stroke();
 
-    ctx.font = "2px Arial";
+    ctx.font = midx/12+"px Arial";
     ctx.fillStyle = "green";
-    ctx.fillText("greetings, programs", midx-(midx*0.6), midy*1.6);
+    ctx.fillText("greetings, programs", midx*0.65, midy*1.6);
 
     requestAnimationFrame(game)
 }
