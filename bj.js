@@ -16,18 +16,11 @@ function game() {
     const rat = 1.452;
     const w = (canvas.width > 600 && canvas.height > 1000) ? canvas.width/100 : 4;
     const h = w*rat;
-    const dhand = [
-        acespades,
-        queenspades,
-        queenspades,
-        queenspades
-    ];
-    const phand = [
-        threeclubs,
-        acespades,
-        queenhearts,
-        jackdiamonds
-    ];
+    const dhand = [];
+    const phand = [];
+
+    round();
+
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     function form(pile) {
         if(midx-(w*pile.length/2) > midx/6){
@@ -47,15 +40,14 @@ function game() {
 
     for(let c=0; c<dhand.length; c++){
         if(c==0){
-            f = 500;
+            ctx.drawImage(dhand[c], 500, 0, 500, 726, form(dhand)+space(dhand)*c, midy/3.75, w, h);
         }else{
-            f = 0;
+            ctx.drawImage(dhand[c], 0, 0, 500, 726, form(dhand)+space(dhand)*c, midy/3.75, w, h);
         };
-        ctx.drawImage(dhand[c], f, 0, 500, 726, form(dhand)+space(dhand)*c, midy/3.75, w, h);
     }
 
     for(let c=0; c<phand.length; c++){
-        ctx.drawImage(phand[c], f, 0, 500, 726, form(phand)+space(phand)*c, midy*0.9, w, h);
+        ctx.drawImage(phand[c], 0, 0, 500, 726, form(phand)+space(phand)*c, midy*0.9, w, h);
     }
 
     ctx.beginPath();
@@ -70,9 +62,23 @@ function game() {
     ctx.rect(0, 0, midx*2, midy*2);
     ctx.stroke();
 
-    ctx.font = midx/12+"px Arial";
+    ctx.font = midx/11+"px Arial";
     ctx.fillStyle = "green";
-    ctx.fillText("greetings, programs", midx*0.65, midy*1.6);
+    ctx.fillText("greetings, programs", midx*0.63, midy*1.6);
 
-    requestAnimationFrame(game)
+    function round() {
+        dhand.push(draw());
+        phand.push(draw());
+        dhand.push(draw());
+        phand.push(draw());
+    }
+
+    function draw() {
+        let num = Math.floor(Math.random() * deck.length);
+        let randomCard = deck[num];
+        deck.splice(num, 1);
+        return randomCard;
+    }
 }
+
+requestAnimationFrame(game)
