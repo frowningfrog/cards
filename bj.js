@@ -14,12 +14,12 @@ function game() {
     const midx = canvas.width/60;
     const midy = canvas.height/60;
     const rat = 1.452;
-    const w = (canvas.width > 600 && canvas.height > 1000) ? canvas.width/100 : 4;
+    const w = (canvas.width > 600 && canvas.height > 1050) ? canvas.width/100 : 4;
     const h = w*rat;
     const dhand = [];
     const phand = [];
 
-    round();
+    deal1();
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     function form(pile) {
@@ -66,7 +66,7 @@ function game() {
     ctx.fillStyle = "green";
     ctx.fillText(canvas.width + " " + canvas.height, midx*0.63, midy*1.6);
 
-    function round() {
+    function deal1() {
         dhand.push(draw());
         phand.push(draw());
         dhand.push(draw());

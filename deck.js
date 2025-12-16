@@ -5,6 +5,7 @@ function load(elem){        //      make        //
 }
 
 const deck = [];
+const discard = [];
 
 acespades = new Image();
 acespades.vhigh = 11;
