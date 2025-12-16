@@ -21,6 +21,8 @@ function play() {
 
     let ptotal = 0;
     let dtotal = 0;
+    let dacecount = 0;
+    let pacecount = 0;
     const dhand = [];
     const phand = [];
     deal1();
@@ -36,7 +38,14 @@ function play() {
 
     for(let c=0; c<phand.length; c++){
         ctx.drawImage(phand[c], 0, 0, 500, 726, form(phand)+space(phand)*c, midy*0.9, w, h);
+        if(phand[c].v == 11){
+            pacecount++;
+        }
         ptotal += phand[c].v;
+    }
+
+    if(ptotal > 21 && pacecount > 0){
+        ptotal -= 10*pacecount;
     }
 
     ctx.beginPath();
@@ -51,9 +60,16 @@ function play() {
     ctx.rect(0, 0, midx*2, midy*2);
     ctx.stroke();
 
-    ctx.font = midx/11+"px Arial";
+    let textsize = 1;
+
+    if(midx/16 > 1){
+        textsize = midx/16;
+    }
+
+    ctx.font = textsize+"px Arial";
     ctx.fillStyle = "green";
-    ctx.fillText(dtotal + " " + ptotal, midx*0.63, midy*1.6);
+    ctx.fillText("Stand", midx*0.63, midy*1.6);
+    ctx.fillText("Hit", midx*1.25, midy*1.6);
 
     function form(pile) {
         if(midx-(w*pile.length/2) > midx/6){

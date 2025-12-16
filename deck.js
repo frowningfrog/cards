@@ -9,7 +9,6 @@ const discard = [];
 
 acespades = new Image();
 acespades.v = 11;
-acespades.vlow = 1;
 acespades.src = 'res/acespades.png';
 acespades.frame = 0;
 deck.push(acespades);
@@ -101,7 +100,6 @@ load(kingspades);
 
 acehearts = new Image();
 acehearts.v = 11;
-acehearts.vlow = 1;
 acehearts.src = 'res/acehearts.png';
 acehearts.frame = 0;
 deck.push(acehearts);
@@ -193,7 +191,6 @@ load(kinghearts);
 
 aceclubs = new Image();
 aceclubs.v = 11;
-aceclubs.vlow = 1;
 aceclubs.src = 'res/aceclubs.png';
 aceclubs.frame = 0;
 deck.push(aceclubs);
@@ -285,7 +282,6 @@ load(kingclubs);
 
 acediamonds = new Image();
 acediamonds.v = 11;
-acediamonds.vlow = 1;
 acediamonds.src = 'res/acediamonds.png';
 acediamonds.frame = 0;
 deck.push(acediamonds);
