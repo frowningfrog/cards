@@ -30,10 +30,10 @@ function game() {
     ];
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     function form(pile) {
-        if(midx-(w*pile.length/2) > .5){
+        if(midx-(w*pile.length/2) > midx/5){
             return (midx-(w*pile.length)/2);
         }else{
-            return w/4;
+            return midx/5;
         }
     }
     function space(pile) {
