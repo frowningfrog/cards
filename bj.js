@@ -14,7 +14,7 @@ function game() {
     const midx = canvas.width/60;
     const midy = canvas.height/60;
     const rat = 1.452;
-    const w = (canvas.width > 600 && canvas.height > 1000) ? canvas.width/100 : 4;
+    const w = (canvas.width > 600 && canvas.height > 1000) ? canvas.width/100 : 5;
     const h = w*rat;
     const dhand = [
         acespades,
@@ -26,21 +26,19 @@ function game() {
         threeclubs,
         acespades,
         queenhearts,
-        jackdiamonds,
-        jackdiamonds,
         jackdiamonds
     ];
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     function form(pile) {
-        if(midx-(w*(pile.length/2)) > 0.5){
+        if(midx-(w*pile.length/2) > .5){
             return (midx-(w*pile.length)/2);
         }else{
-            return w/3.7;
+            return w/4;
         }
     }
     function space(pile) {
-        if(midx/pile.length*1.7 <= w) {
-            return midx/pile.length*1.7;
+        if(midx/pile.length*1.5 <= w) {
+            return midx/pile.length*1.5;
         }else{
             return w;
         }
