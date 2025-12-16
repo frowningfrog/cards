@@ -60,11 +60,17 @@ function play() {
     ctx.rect(0, 0, midx*2, midy*2);
     ctx.stroke();
 
-    ctx.font = 0.09+"em Arial";
+    let textsize = 0.09;
+
+    if((midy*2) > 1050){
+        textsize = 1;
+    }
+
+    ctx.font = textsize+"em Arial";
     ctx.fillStyle = "green";
     ctx.fillText(canvas.width + " " + canvas.height, midx*0.6, midy*1.8);
-    ctx.fillText("Stand", midx*0.6, midy*1.6);
-    ctx.fillText("Hit", midx*1.3, midy*1.6);
+    ctx.fillText("Stand", midx*0.6, midy*1.59);
+    ctx.fillText("Hit", midx*1.3, midy*1.59);
 
     function form(pile) {
         if(midx-(w*pile.length/2) > midx/6){
