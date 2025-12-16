@@ -63,13 +63,15 @@ function play() {
     let textsize = 1.5;
 
     if((midy*2) > 1050 && (midx*2) > 800){
-        textsize = 3;
+        textsize = 4;
     }
 
     ctx.font = textsize+"px Arial";
     ctx.fillStyle = "green";
 
     ctx.fillText("Dealer: " + dtotal, midx-((dhand.length*w)/2), midy*0.25);
+    ctx.fillText("Your hand: " + ptotal, midx-((phand.length*w)/2), midy*0.89);
+
     ctx.fillText(canvas.width + " " + canvas.height, midx*0.6, midy*1.8);
     ctx.fillText("Stand", midx*0.6, midy*1.59);
     ctx.fillText("Hit", midx*1.3, midy*1.59);
@@ -94,6 +96,7 @@ function play() {
         phand.push(draw());
         dhand.push(draw());
         phand.push(draw());
+        phand.push(acespades);
     }
 
     function draw() {
