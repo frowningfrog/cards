@@ -3,7 +3,7 @@ function start() {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
     ctx = canvas.getContext("2d");
-    ctx.imageSmoothingEnabled = false;  // not fuzzy yay
+    ctx.imageSmoothingEnabled = true;
     const resize = 30;
     ctx.scale(resize, resize);
 
@@ -14,7 +14,7 @@ function play() {
     const midx = canvas.width/60;
     const midy = canvas.height/60;
     const rat = 1.452;
-    const w = (canvas.width > 600 && canvas.height > 1050) ? canvas.width/100 : 4;
+    const w = (canvas.width > 600 && canvas.height > 1050) ? canvas.width/100 : 3.75;
     const h = w*rat;
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -60,10 +60,10 @@ function play() {
     ctx.rect(0, 0, midx*2, midy*2);
     ctx.stroke();
 
-    ctx.font = 1.25+"px Arial";
+    ctx.font = 0.09+"em Arial";
     ctx.fillStyle = "green";
     ctx.fillText("Stand", midx-(midx/3), midy*1.6);
-    ctx.fillText("Hit", midx+(midx/4.5), midy*1.6);
+    ctx.fillText("Hit", midx+(midx/5.5), midy*1.6);
 
     function form(pile) {
         if(midx-(w*pile.length/2) > midx/6){
