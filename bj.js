@@ -62,8 +62,9 @@ function play() {
 
     ctx.font = 0.09+"em Arial";
     ctx.fillStyle = "green";
-    ctx.fillText("Stand", midx-(midx/3), midy*1.6);
-    ctx.fillText("Hit", midx+(midx/5.5), midy*1.6);
+    ctx.fillText(canvas.width + " " + canvas.height, midx*0.6, midy*1.8);
+    ctx.fillText("Stand", midx*0.6, midy*1.6);
+    ctx.fillText("Hit", midx*1.3, midy*1.6);
 
     function form(pile) {
         if(midx-(w*pile.length/2) > midx/6){
