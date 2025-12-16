@@ -14,7 +14,7 @@ function game() {
     const midx = canvas.width/60;
     const midy = canvas.height/60;
     const rat = 1.452;
-    const w = (canvas.width > 600 && canvas.height > 1000) ? canvas.width/100 : 5;
+    const w = (canvas.width > 600 && canvas.height > 1000) ? canvas.width/100 : 4;
     const h = w*rat;
     const dhand = [
         acespades,
@@ -30,10 +30,10 @@ function game() {
     ];
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     function form(pile) {
-        if(midx-(w*pile.length/2) > midx/5){
+        if(midx-(w*pile.length/2) > midx/6){
             return (midx-(w*pile.length)/2);
         }else{
-            return midx/5;
+            return midx/6;
         }
     }
     function space(pile) {
@@ -51,7 +51,7 @@ function game() {
         }else{
             f = 0;
         };
-        ctx.drawImage(dhand[c], f, 0, 500, 726, form(dhand)+space(dhand)*c, midy/6, w, h);
+        ctx.drawImage(dhand[c], f, 0, 500, 726, form(dhand)+space(dhand)*c, midy/3.75, w, h);
     }
 
     for(let c=0; c<phand.length; c++){
@@ -72,7 +72,7 @@ function game() {
 
     ctx.font = "1px Arial";
     ctx.fillStyle = "green";
-    ctx.fillText(canvas.width + " " + canvas.height + " " + midx, 1, 1);
+    ctx.fillText("greetings, programs", midx*0.6, midy*1.6);
 
     requestAnimationFrame(game)
 }
