@@ -7,47 +7,36 @@ function start() {
     const resize = 30;
     ctx.scale(resize, resize);
 
-    game();
+    play();
 }
 
-function game() {
+function play() {
     const midx = canvas.width/60;
     const midy = canvas.height/60;
     const rat = 1.452;
     const w = (canvas.width > 600 && canvas.height > 1050) ? canvas.width/100 : 4;
     const h = w*rat;
-    const dhand = [];
-    const phand = [];
-
-    deal1();
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    function form(pile) {
-        if(midx-(w*pile.length/2) > midx/6){
-            return (midx-(w*pile.length)/2);
-        }else{
-            return midx/6;
-        }
-    }
-    function space(pile) {
-        if(midx/pile.length*1.45 <= w) {
-            return midx/pile.length*1.45;
-        }else{
-            return w;
-        }
-    }
-    let f = 0;
+
+    let ptotal = 0;
+    let dtotal = 0;
+    const dhand = [];
+    const phand = [];
+    deal1();
 
     for(let c=0; c<dhand.length; c++){
         if(c==0){
             ctx.drawImage(dhand[c], 500, 0, 500, 726, form(dhand)+space(dhand)*c, midy/3.75, w, h);
         }else{
             ctx.drawImage(dhand[c], 0, 0, 500, 726, form(dhand)+space(dhand)*c, midy/3.75, w, h);
+            dtotal += dhand[c].v;
         };
     }
 
     for(let c=0; c<phand.length; c++){
         ctx.drawImage(phand[c], 0, 0, 500, 726, form(phand)+space(phand)*c, midy*0.9, w, h);
+        ptotal += phand[c].v;
     }
 
     ctx.beginPath();
@@ -64,7 +53,22 @@ function game() {
 
     ctx.font = midx/11+"px Arial";
     ctx.fillStyle = "green";
-    ctx.fillText(canvas.width + " " + canvas.height, midx*0.63, midy*1.6);
+    ctx.fillText(dtotal + " " + ptotal, midx*0.63, midy*1.6);
+
+    function form(pile) {
+        if(midx-(w*pile.length/2) > midx/6){
+            return (midx-(w*pile.length)/2);
+        }else{
+            return midx/6;
+        }
+    }
+    function space(pile) {
+        if(midx/pile.length*1.45 <= w) {
+            return midx/pile.length*1.45;
+        }else{
+            return w;
+        }
+    }
 
     function deal1() {
         dhand.push(draw());
@@ -81,4 +85,4 @@ function game() {
     }
 }
 
-requestAnimationFrame(game)
+requestAnimationFrame(play)
