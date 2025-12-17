@@ -41,8 +41,13 @@ function loop() {
 
         ctx.drawImage(stand, 0, 0, 500, 250, (canvas.width/2)-55-w, canvas.height*0.733, w, h/3);
         ctx.drawImage(hit, 0, 0, 500, 250, (canvas.width/2)+55, canvas.height*0.733, w, h/3);
-        
-        ctx.font = "33px Tahoma";
+
+        let textsize = 33;
+        if(canvas.height > 1000){
+            textsize = 66;
+        }
+
+        ctx.font = textsize+"px Tahoma";
         ctx.fillStyle = "orange";
         ctx.fillText("Dealer: " + dtotal, (canvas.width/2), (canvas.height/2)*0.25);
         ctx.fillText("Your hand: " + ptotal, (canvas.width/2), (canvas.height/2)*0.89);
