@@ -21,6 +21,7 @@ function loop() {
 
     function paint() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
+        //display dealer hand
         for(let c=0; c<dhand.length; c++){
             if(c==0){
                 ctx.drawImage(dhand[c], 500, 0, 500, 726, form(dhand)+space(dhand)*c, (canvas.height/2)/3.75, w, h);
@@ -29,6 +30,7 @@ function loop() {
                 dtotal += dhand[c].v;
             };
         }
+        //display player hand
         for(let c=0; c<phand.length; c++){
             ctx.drawImage(phand[c], 0, 0, 500, 726, form(phand)+space(phand)*c, (canvas.height/2)*0.9, w, h);
             if(phand[c].v == 11){
@@ -36,17 +38,14 @@ function loop() {
             }
             ptotal += phand[c].v;
         }
-        ctx.fillStyle = "gold";
-        ctx.fillRect((canvas.width/2)-150, canvas.height*0.733, 115, 90);
-        ctx.fillRect((canvas.width/2)+55, canvas.height*0.733, 115, 90);
 
-        ctx.font = "33px Calibri";
-        ctx.fillStyle = "black";
-        ctx.fillText("Dealer: " + dtotal, (canvas.width/2)-((dhand.length*w)/2), (canvas.height/2)*0.25);
-        ctx.fillText("Your hand: " + ptotal, (canvas.width/2)-((phand.length*w)/2), (canvas.height/2)*0.89);
+        ctx.drawImage(stand, 0, 0, 500, 250, (canvas.width/2)-55-w, canvas.height*0.733, w, h/3);
+        ctx.drawImage(hit, 0, 0, 500, 250, (canvas.width/2)+55, canvas.height*0.733, w, h/3);
         
-        ctx.fillText("Stand", (canvas.width/2)-130, canvas.height*0.766);
-        ctx.fillText("Hit", (canvas.width/2)+70, canvas.height*0.766);
+        ctx.font = "33px Tahoma";
+        ctx.fillStyle = "orange";
+        ctx.fillText("Dealer: " + dtotal, (canvas.width/2), (canvas.height/2)*0.25);
+        ctx.fillText("Your hand: " + ptotal, (canvas.width/2), (canvas.height/2)*0.89);
 
         ctx.fillText(canvas.width + " " + canvas.height, (canvas.width/2)*0.6, (canvas.height/2)*1.8);
 
@@ -59,8 +58,9 @@ function loop() {
         const x = event.pageX - rect.left;
         const y = event.pageY - rect.top;
 
-        if(y >= canvas.height*0.733 && y <= (canvas.height*0.733)+90
-            && x >= (canvas.width/2)+55 && x <= ((canvas.width/2)+55)+115){
+        //draw card if Hit is pressed
+        if(x >= (canvas.width/2)+55 && x <= ((canvas.width/2)+55)+w
+            && y >= canvas.height*0.733 && y <= (canvas.height*0.733)+(h/3)){
                 phand.push(draw());
                 paint();
         }
