@@ -21,7 +21,7 @@ function loop() {
 
     function paint() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        //display dealer hand
+        // display dealer hand
         for(let c=0; c<dhand.length; c++){
             if(c==0){
                 ctx.drawImage(dhand[c], 500, 0, 500, 726, form(dhand)+space(dhand)*c, (canvas.height/2)/3.75, w, h);
@@ -30,7 +30,7 @@ function loop() {
                 dtotal += dhand[c].v;
             };
         }
-        //display player hand
+        // display player hand
         for(let c=0; c<phand.length; c++){
             ctx.drawImage(phand[c], 0, 0, 500, 726, form(phand)+space(phand)*c, (canvas.height/2)*0.9, w, h);
             if(phand[c].v == 11){
@@ -39,11 +39,12 @@ function loop() {
             ptotal += phand[c].v;
         }
 
+        // buttons
         ctx.drawImage(stand, 0, 0, 500, 250, (canvas.width/2)-55-w, canvas.height*0.733, w, h/3);
         ctx.drawImage(hit, 0, 0, 500, 250, (canvas.width/2)+55, canvas.height*0.733, w, h/3);
 
         let textsize = 33;
-        if(canvas.height > 1000){
+        if(canvas.width < 1000 && canvas.height > 1000){
             textsize = 66;
         }
 
@@ -67,8 +68,8 @@ function loop() {
         if(x >= (canvas.width/2)+55 && x <= ((canvas.width/2)+55)+w
             && y >= canvas.height*0.733 && y <= (canvas.height*0.733)+(h/3)){
                 phand.push(draw());
-                paint();
         }
+        paint();
     })
 
     function form(pile) {
