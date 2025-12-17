@@ -10,7 +10,7 @@ function start() {
 
 function play() {
     const rat = 1.452;
-    const w = (canvas.width > 600 && canvas.height > 1050) ? canvas.width/100 : 125;
+    const w = (canvas.width > 600 && canvas.height > 1050) ? canvas.width/5 : 125;
     const h = w*rat;
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -57,10 +57,6 @@ function play() {
     ctx.stroke();
 
     let textsize = 33;
-
-    if(canvas.width > 1050 && canvas.height > 800){
-        textsize = 4;
-    }
 
     ctx.font = textsize+"px Calibri";
     ctx.fillStyle = "green";
