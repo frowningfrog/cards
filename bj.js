@@ -35,6 +35,7 @@ function start() {
         if(flag == "sh"){
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             buttons();
+            // display dealer hand before stand
             for(let c=0; c<dhand.length; c++){
                 if(c==0){
                     ctx.drawImage(dhand[c], 500, 0, 500, 726, form(dhand)+space(dhand)*c, (canvas.height/2)/3.75, w, h);
@@ -122,6 +123,18 @@ function start() {
         function dhanddisplay() {
             let dacecount = 0;
             dtotal = 0;
+            run();
+            function run() {
+                let check = 0;
+                dhand.forEach(card => {
+                    check += card.v;
+                })
+                if(check<17){
+                    shuffle();
+                    dhand.push(draw());
+                    run();
+                }
+            };
             for(let c=0; c<dhand.length; c++){
                 ctx.drawImage(dhand[c], 0, 0, 500, 726, form(dhand)+space(dhand)*c, (canvas.height/2)/3.75, w, h);
                 if(dhand[c].v == 11){
@@ -196,8 +209,6 @@ function start() {
             y >= canvas.height*0.733 && 
             y <= (canvas.height*0.733)+(h/3)){
 
-            function check() {if(dtotal<=16){dhand.push(draw());}}
-            check(); check(); check(); check(); check(); check(); check(); check();
             flag = "end";
         }else // next round
         if(flag == "end" && 
