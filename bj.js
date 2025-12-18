@@ -26,7 +26,7 @@ function start() {
 
     function paint() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        
+        dtotal = 0;
         if(start == true){
             roundstart();
             start = false;
@@ -79,8 +79,13 @@ function start() {
             }
             ctx.drawImage(next, 0, 0, 500, 250, (canvas.width/2)-(w/2), canvas.height*0.733, w, h/3);
             write();
-            dhand = [];
-            phand = [];
+            while(dhand.length > 0){
+                discard.push(dhand.pop());
+            }
+            while(phand.length > 0){
+                discard.push(phand.pop());
+            }
+            roundstart();           
         }
 
         // canvas dimensions
@@ -147,9 +152,13 @@ function start() {
         }
 
         function roundstart() {
+            shuffle();
             dhand.push(draw());
+            shuffle();
             phand.push(draw());
+            shuffle();
             dhand.push(draw());
+            shuffle();
             phand.push(draw());
         }
     }
@@ -158,6 +167,13 @@ function start() {
         let randomCard = deck[num];
         deck.splice(num, 1);
         return randomCard;
+    }
+    function shuffle() {
+        if(deck.length<1){
+            while(discard.length>0){
+                deck.push(discard.pop());
+            }
+        }
     }
     canvas.addEventListener('click', function(event) {
         const rect = canvas.getBoundingClientRect();
@@ -170,7 +186,8 @@ function start() {
             x <= ((canvas.width/2)+55)+w && 
             y >= canvas.height*0.733 && 
             y <= (canvas.height*0.733)+(h/3)){
-
+            
+            shuffle();
             phand.push(draw());
         }else // stand
         if(flag == "sh" && 
@@ -179,6 +196,8 @@ function start() {
             y >= canvas.height*0.733 && 
             y <= (canvas.height*0.733)+(h/3)){
 
+            function check() {if(dtotal<=16){dhand.push(draw());}}
+            check(); check(); check(); check(); check(); check(); check(); check();
             flag = "end";
         }else // next round
         if(flag == "end" && 
@@ -188,6 +207,8 @@ function start() {
             y <= (canvas.height*0.733)+(h/3)){
             
             flag = "sh";
+        }else{
+            //do nothing
         }
         paint();
     })
