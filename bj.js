@@ -76,10 +76,10 @@ function start() {
             ctx.drawImage(next, 0, 0, 500, 250, (canvas.width/2)-(w/2), canvas.height*0.733, w, h/3);
             write();
 
-            for(let d=0; d<=dhand.length; d++){
+            for(let d=0; d<dhand.length; d++){
                 discard.push(dhand[0]);
             }
-            for(let c=0; c<=phand.length; c++){
+            for(let c=0; c<phand.length; c++){
                 discard.push(phand[0]);
             }
             dhand.length = 0;
