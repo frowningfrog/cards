@@ -15,6 +15,13 @@ function start() {
 
     let flag = "";
 
+    let textsize = 33;
+    if(canvas.width < 1000 && canvas.height > 1000){
+        textsize = 66;
+    }
+    ctx.font = textsize+"px Tahoma";
+    ctx.fillStyle = "orangered";
+
     paint();
 
     function paint() {
@@ -25,6 +32,7 @@ function start() {
             dhand.push(draw());
             phand.push(draw());
         }
+        dtotal = 0;
         
         // display dealer hand before player stands
         for(let c=0; c<dhand.length; c++){
@@ -43,19 +51,15 @@ function start() {
             
         }
 
-        // buttons
-        ctx.drawImage(stand, 0, 0, 500, 250, (canvas.width/2)-55-w, canvas.height*0.733, w, h/3);
-        ctx.drawImage(hit, 0, 0, 500, 250, (canvas.width/2)+55, canvas.height*0.733, w, h/3);
+        buttons();
 
-        let textsize = 33;
-        if(canvas.width < 1000 && canvas.height > 1000){
-            textsize = 66;
+        // buttons
+        function buttons() {
+            ctx.drawImage(stand, 0, 0, 500, 250, (canvas.width/2)-55-w, canvas.height*0.733, w, h/3);
+            ctx.drawImage(hit, 0, 0, 500, 250, (canvas.width/2)+55, canvas.height*0.733, w, h/3);
         }
 
-        ctx.font = textsize+"px Tahoma";
-        ctx.fillStyle = "orangered";
-        ctx.fillText("Dealer: " + dtotal, (canvas.width/2)-w, (canvas.height/2)*0.25);
-        ctx.fillText("Your hand: " + ptotal, (canvas.width/2)-w, (canvas.height/2)*0.89);
+        boring();
 
         if(flag != ""){
             ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -71,14 +75,21 @@ function start() {
             if(flag == "push"){
                 ctx.fillText("Push", (canvas.width/2)*0.6, (canvas.height/2)*1.8);
             }
+            boring();
         }
 
         // canvas dimensions
         //ctx.fillText(canvas.width + " " + canvas.height, (canvas.width/2)*0.6, (canvas.height/2)*1.8);
         //requestAnimationFrame(paint);
 
+        function boring() {
+            ctx.fillText("Dealer: " + dtotal, (canvas.width/2)-w, (canvas.height/2)*0.25);
+            ctx.fillText("Your hand: " + ptotal, (canvas.width/2)-w, (canvas.height/2)*0.89);
+        }
+
         function phanddisplay() {
             let pacecount = 0;
+            ptotal = 0;
             for(let c=0; c<phand.length; c++){
                 ctx.drawImage(phand[c], 0, 0, 500, 726, form(phand)+space(phand)*c, (canvas.height/2)*0.9, w, h);
                 if(phand[c].v == 11){
@@ -94,6 +105,7 @@ function start() {
 
         function dhanddisplay() {
             let dacecount = 0;
+            dtotal = 0;
             for(let c=0; c<dhand.length; c++){
                 ctx.drawImage(dhand[c], 0, 0, 500, 726, form(dhand)+space(dhand)*c, (canvas.height/2)/3.75, w, h);
                 if(dhand[c].v == 11){
@@ -152,13 +164,19 @@ function start() {
                 if(ptotal == dtotal){
                     flag = "push";
                 }else
-                if(ptotal > 21 && dtotal <= 21){
+                if(ptotal == 21 && dtotal != 21){
+                    flag = "won";
+                }else
+                if(ptotal != 21 && dtotal == 21){
                     flag = "lost";
                 }else
                 if(ptotal <= 21 && dtotal > 21){
                     flag = "won";
                 }else
-                if(ptotal < 21 && dtotal < 21 &&
+                if(ptotal > 21 && dtotal <= 21){
+                    flag = "lost";
+                }else
+                if(ptotal <= 21 && dtotal < 21 &&
                     ptotal > dtotal){
                     flag = "won";
                 }else{
@@ -171,7 +189,18 @@ function start() {
                 y >= canvas.height*0.733 && 
                 y <= (canvas.height*0.733)+(h/3)){
                 
-                
+                for(let c=0; c<=dhand.length; c++){
+                    discard.push(dhand[c]);
+                    dhand.splice(dhand[c], 1);
+                }
+                for(let c=0; c<=phand.length; c++){
+                    discard.push(phand[c]);
+                    phand.splice(phand[c], 1);
+                }
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                flag = "";
+                buttons();
+                paint();
             }
             paint();
         })
