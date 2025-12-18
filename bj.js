@@ -21,29 +21,24 @@ function start() {
     }
     ctx.font = textsize+"px Tahoma";
     ctx.fillStyle = "orangered";
-    let start = true;
+
+    let begin = true;
+    
     paint();
 
     function paint() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         dtotal = 0;
-        if(start == true){
-            roundstart();
-            start = false;
-        }
 
         if(flag == "sh"){
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             buttons();
-            // display dealer hand before stand
-            for(let c=0; c<dhand.length; c++){
-                if(c==0){
-                    ctx.drawImage(dhand[c], 500, 0, 500, 726, form(dhand)+space(dhand)*c, (canvas.height/2)/3.75, w, h);
-                }else{
-                    ctx.drawImage(dhand[c], 0, 0, 500, 726, form(dhand)+space(dhand)*c, (canvas.height/2)/3.75, w, h);
-                    dtotal += dhand[c].v;
-                };
+            if(begin == true){
+                roundstart();
+                begin = false;
             }
+
+            dhanddisplay();
             phanddisplay();
             write();
             
@@ -80,13 +75,16 @@ function start() {
             }
             ctx.drawImage(next, 0, 0, 500, 250, (canvas.width/2)-(w/2), canvas.height*0.733, w, h/3);
             write();
-            while(dhand.length > 0){
-                discard.push(dhand.pop());
+
+            for(let d=0; d<=dhand.length; d++){
+                discard.push(dhand[0]);
             }
-            while(phand.length > 0){
-                discard.push(phand.pop());
+            for(let c=0; c<=phand.length; c++){
+                discard.push(phand[0]);
             }
-            roundstart();           
+            dhand.length = 0;
+            phand.length = 0;
+            roundstart();
         }
 
         // canvas dimensions
@@ -123,20 +121,25 @@ function start() {
         function dhanddisplay() {
             let dacecount = 0;
             dtotal = 0;
+            let f = 0;
             run();
             function run() {
                 let check = 0;
                 dhand.forEach(card => {
                     check += card.v;
                 })
-                if(check<17){
-                    shuffle();
+                if(check<17 && flag=="end"){
                     dhand.push(draw());
                     run();
                 }
             };
             for(let c=0; c<dhand.length; c++){
-                ctx.drawImage(dhand[c], 0, 0, 500, 726, form(dhand)+space(dhand)*c, (canvas.height/2)/3.75, w, h);
+                if(c==0 && flag=="sh"){
+                    f=500;
+                }else{
+                    f=0;
+                }
+                ctx.drawImage(dhand[c], f, 0, 500, 726, form(dhand)+space(dhand)*c, (canvas.height/2)/3.75, w, h);
                 if(dhand[c].v == 11){
                     dacecount++;
                 }
@@ -165,13 +168,9 @@ function start() {
         }
 
         function roundstart() {
-            shuffle();
             dhand.push(draw());
-            shuffle();
             phand.push(draw());
-            shuffle();
             dhand.push(draw());
-            shuffle();
             phand.push(draw());
         }
     }
@@ -182,10 +181,8 @@ function start() {
         return randomCard;
     }
     function shuffle() {
-        if(deck.length<1){
-            while(discard.length>0){
-                deck.push(discard.pop());
-            }
+        for(let q=0; q<discard.length; q++){
+            deck.push(discard.splice(discard[q], 1));
         }
     }
     canvas.addEventListener('click', function(event) {
@@ -200,13 +197,12 @@ function start() {
             y >= canvas.height*0.733 && 
             y <= (canvas.height*0.733)+(h/3)){
             
-            shuffle();
             phand.push(draw());
         }else // stand
         if(flag == "sh" && 
             x >= (canvas.width/2)-55-w && 
             x <= (canvas.width/2)-55 && 
-            y >= canvas.height*0.733 && 
+            y >= (canvas.height*0.733) && 
             y <= (canvas.height*0.733)+(h/3)){
 
             flag = "end";
@@ -214,12 +210,10 @@ function start() {
         if(flag == "end" && 
             x >= (canvas.width/2)-(w/2) && 
             x <= (canvas.width/2)+(w/2) && 
-            y >= canvas.height*0.733 && 
+            y >= (canvas.height*0.733) && 
             y <= (canvas.height*0.733)+(h/3)){
-            
+
             flag = "sh";
-        }else{
-            //do nothing
         }
         paint();
     })
