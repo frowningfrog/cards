@@ -13,7 +13,7 @@ function start() {
     let ptotal = 0;
     let dtotal = 0;
 
-    let flag = "";
+    let flag = "sh";
 
     let textsize = 33;
     if(canvas.width < 1000 && canvas.height > 1000){
@@ -21,70 +21,81 @@ function start() {
     }
     ctx.font = textsize+"px Tahoma";
     ctx.fillStyle = "orangered";
-
+    let start = true;
     paint();
 
     function paint() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        if(phand.length < 1){
-            dhand.push(draw());
-            phand.push(draw());
-            dhand.push(draw());
-            phand.push(draw());
-        }
-        dtotal = 0;
         
-        // display dealer hand before player stands
-        for(let c=0; c<dhand.length; c++){
-            if(c==0){
-                ctx.drawImage(dhand[c], 500, 0, 500, 726, form(dhand)+space(dhand)*c, (canvas.height/2)/3.75, w, h);
-            }else{
-                ctx.drawImage(dhand[c], 0, 0, 500, 726, form(dhand)+space(dhand)*c, (canvas.height/2)/3.75, w, h);
-                dtotal += dhand[c].v;
-            };
+        if(start == true){
+            roundstart();
+            start = false;
         }
-        // display player hand
-        phanddisplay();
 
-        // bust if player hand is over 21
-        if(ptotal > 21){
+        if(flag == "sh"){
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            buttons();
+            for(let c=0; c<dhand.length; c++){
+                if(c==0){
+                    ctx.drawImage(dhand[c], 500, 0, 500, 726, form(dhand)+space(dhand)*c, (canvas.height/2)/3.75, w, h);
+                }else{
+                    ctx.drawImage(dhand[c], 0, 0, 500, 726, form(dhand)+space(dhand)*c, (canvas.height/2)/3.75, w, h);
+                    dtotal += dhand[c].v;
+                };
+            }
+            phanddisplay();
+            write();
             
+        }else 
+        if(flag == "end"){
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            dhanddisplay();
+            phanddisplay();
+
+            if(ptotal == dtotal){
+                ctx.fillText("Push", (canvas.width/2)*0.6, (canvas.height/2)*1.8);
+            }else
+            if(ptotal > 21){
+                ctx.fillText("You're meh...", (canvas.width/2)*0.6, (canvas.height/2)*1.8);
+            }else
+            if(ptotal == 21 && dtotal != 21){
+                ctx.fillText("You won1", (canvas.width/2)*0.6, (canvas.height/2)*1.8);
+            }else
+            if(ptotal != 21 && dtotal == 21){
+                ctx.fillText("You're meh...", (canvas.width/2)*0.6, (canvas.height/2)*1.8);
+            }else
+            if(ptotal <= 21 && dtotal > 21){
+                ctx.fillText("You won2", (canvas.width/2)*0.6, (canvas.height/2)*1.8);
+            }else
+            if(ptotal > 21 && dtotal <= 21){
+                ctx.fillText("You're meh...", (canvas.width/2)*0.6, (canvas.height/2)*1.8);
+            }else
+            if(ptotal <= 21 && dtotal < 21 &&
+                ptotal > dtotal){
+                ctx.fillText("You won3", (canvas.width/2)*0.6, (canvas.height/2)*1.8);
+            }else{
+                ctx.fillText("You're meh...", (canvas.width/2)*0.6, (canvas.height/2)*1.8);
+            }
+            ctx.drawImage(next, 0, 0, 500, 250, (canvas.width/2)-(w/2), canvas.height*0.733, w, h/3);
+            write();
+            dhand = [];
+            phand = [];
         }
 
-        buttons();
+        // canvas dimensions
+        //ctx.fillText(canvas.width + " " + canvas.height, (canvas.width/2)*0.6, (canvas.height/2)*1.8);
+        // deck and discard piles
+        function write(){
+            ctx.fillText(deck.length + " " + discard.length, (canvas.width/2), (canvas.height/2)*1.8);
+            ctx.fillText("Dealer: " + dtotal, (canvas.width/2)-w, (canvas.height/2)*0.25);
+            ctx.fillText("Your hand: " + ptotal, (canvas.width/2)-w, (canvas.height/2)*0.89);
+        }
 
         // buttons
         function buttons() {
             ctx.drawImage(stand, 0, 0, 500, 250, (canvas.width/2)-55-w, canvas.height*0.733, w, h/3);
             ctx.drawImage(hit, 0, 0, 500, 250, (canvas.width/2)+55, canvas.height*0.733, w, h/3);
-        }
-
-        boring();
-
-        if(flag != ""){
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            phanddisplay();
-            dhanddisplay();
-            ctx.drawImage(next, 0, 0, 500, 250, (canvas.width/2)-(w/2), canvas.height*0.733, w, h/3);
-            if(flag == "won"){
-                ctx.fillText("You WIN!!!", (canvas.width/2)*0.6, (canvas.height/2)*1.8);
-            }else
-            if(flag == "lost"){
-                ctx.fillText("You're meh...", (canvas.width/2)*0.6, (canvas.height/2)*1.8);
-            }else
-            if(flag == "push"){
-                ctx.fillText("Push", (canvas.width/2)*0.6, (canvas.height/2)*1.8);
-            }
-            boring();
-        }
-
-        // canvas dimensions
-        //ctx.fillText(canvas.width + " " + canvas.height, (canvas.width/2)*0.6, (canvas.height/2)*1.8);
-        //requestAnimationFrame(paint);
-
-        function boring() {
-            ctx.fillText("Dealer: " + dtotal, (canvas.width/2)-w, (canvas.height/2)*0.25);
-            ctx.fillText("Your hand: " + ptotal, (canvas.width/2)-w, (canvas.height/2)*0.89);
         }
 
         function phanddisplay() {
@@ -135,74 +146,49 @@ function start() {
             }
         }
 
-        function draw() {
-            let num = Math.floor(Math.random() * deck.length);
-            let randomCard = deck[num];
-            deck.splice(num, 1);
-            return randomCard;
+        function roundstart() {
+            dhand.push(draw());
+            phand.push(draw());
+            dhand.push(draw());
+            phand.push(draw());
         }
-        canvas.addEventListener('click', function(event) {
-            const rect = canvas.getBoundingClientRect();
-            const x = event.pageX - rect.left;
-            const y = event.pageY - rect.top;
-
-            // draw a card if player hits
-            if(flag == "" && 
-                x >= (canvas.width/2)+55 && 
-                x <= ((canvas.width/2)+55)+w && 
-                y >= canvas.height*0.733 && 
-                y <= (canvas.height*0.733)+(h/3)){
-
-                phand.push(draw());
-            }else // stand
-            if(flag == "" && 
-                x >= (canvas.width/2)-55-w && 
-                x <= (canvas.width/2)-55 && 
-                y >= canvas.height*0.733 && 
-                y <= (canvas.height*0.733)+(h/3)){
-
-                if(ptotal == dtotal){
-                    flag = "push";
-                }else
-                if(ptotal == 21 && dtotal != 21){
-                    flag = "won";
-                }else
-                if(ptotal != 21 && dtotal == 21){
-                    flag = "lost";
-                }else
-                if(ptotal <= 21 && dtotal > 21){
-                    flag = "won";
-                }else
-                if(ptotal > 21 && dtotal <= 21){
-                    flag = "lost";
-                }else
-                if(ptotal <= 21 && dtotal < 21 &&
-                    ptotal > dtotal){
-                    flag = "won";
-                }else{
-                    flag = "lost";
-                }
-            }else // next round
-            if(flag != "" && 
-                x >= (canvas.width/2)-(w/2) && 
-                x <= (canvas.width/2)+(w/2) && 
-                y >= canvas.height*0.733 && 
-                y <= (canvas.height*0.733)+(h/3)){
-                
-                for(let c=0; c<=dhand.length; c++){
-                    discard.push(dhand[c]);
-                    dhand.splice(dhand[c], 1);
-                }
-                for(let c=0; c<=phand.length; c++){
-                    discard.push(phand[c]);
-                    phand.splice(phand[c], 1);
-                }
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                flag = "";
-                buttons();
-                paint();
-            }
-            paint();
-        })
     }
+    function draw() {
+        let num = Math.floor(Math.random() * deck.length);
+        let randomCard = deck[num];
+        deck.splice(num, 1);
+        return randomCard;
+    }
+    canvas.addEventListener('click', function(event) {
+        const rect = canvas.getBoundingClientRect();
+        const x = event.pageX - rect.left;
+        const y = event.pageY - rect.top;
+
+        // draw a card if player hits
+        if(flag == "sh" &&
+            x >= (canvas.width/2)+55 && 
+            x <= ((canvas.width/2)+55)+w && 
+            y >= canvas.height*0.733 && 
+            y <= (canvas.height*0.733)+(h/3)){
+
+            phand.push(draw());
+        }else // stand
+        if(flag == "sh" && 
+            x >= (canvas.width/2)-55-w && 
+            x <= (canvas.width/2)-55 && 
+            y >= canvas.height*0.733 && 
+            y <= (canvas.height*0.733)+(h/3)){
+
+            flag = "end";
+        }else // next round
+        if(flag == "end" && 
+            x >= (canvas.width/2)-(w/2) && 
+            x <= (canvas.width/2)+(w/2) && 
+            y >= canvas.height*0.733 && 
+            y <= (canvas.height*0.733)+(h/3)){
+            
+            flag = "sh";
+        }
+        paint();
+    })
 }
