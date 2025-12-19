@@ -92,7 +92,7 @@ function start() {
         // deck and discard piles
         function write(){
             ctx.fillText(deck.length + " " + discard.length, (canvas.width/2), (canvas.height/2)*1.8);
-            ctx.fillText("Dealer: " + dtotal, (canvas.width/2)-w, (canvas.height/2)*0.25);
+            //ctx.fillText("Dealer: " + dtotal, (canvas.width/2)-w, (canvas.height/2)*0.25);
             ctx.fillText("Your hand: " + ptotal, (canvas.width/2)-w, (canvas.height/2)*0.89);
         }
 
