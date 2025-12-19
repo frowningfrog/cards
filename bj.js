@@ -13,6 +13,10 @@ function start() {
     let ptotal = 0;
     let dtotal = 0;
 
+    let won = 0;
+    let ties = 0;
+    let lost = 0;
+
     let flag = "sh";
 
     let textsize = 33;
@@ -41,7 +45,6 @@ function start() {
             dhanddisplay();
             phanddisplay();
             write();
-            
         }else 
         if(flag == "end"){
             ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -51,36 +54,41 @@ function start() {
 
             if(ptotal == dtotal){
                 ctx.fillText("Push", (canvas.width/2)*0.6, (canvas.height/2)*1.8);
+                ties++;
             }else
             if(ptotal > 21){
                 ctx.fillText("You're meh...", (canvas.width/2)*0.6, (canvas.height/2)*1.8);
+                lost++;
             }else
             if(ptotal == 21 && dtotal != 21){
                 ctx.fillText("You won1", (canvas.width/2)*0.6, (canvas.height/2)*1.8);
+                won++;
             }else
             if(ptotal != 21 && dtotal == 21){
                 ctx.fillText("You're meh...", (canvas.width/2)*0.6, (canvas.height/2)*1.8);
+                lost++;
             }else
             if(ptotal <= 21 && dtotal > 21){
                 ctx.fillText("You won2", (canvas.width/2)*0.6, (canvas.height/2)*1.8);
-            }else
-            if(ptotal > 21 && dtotal <= 21){
-                ctx.fillText("You're meh...", (canvas.width/2)*0.6, (canvas.height/2)*1.8);
+                won++;
             }else
             if(ptotal <= 21 && dtotal < 21 &&
                 ptotal > dtotal){
                 ctx.fillText("You won3", (canvas.width/2)*0.6, (canvas.height/2)*1.8);
+                won++;
             }else{
                 ctx.fillText("You're meh...", (canvas.width/2)*0.6, (canvas.height/2)*1.8);
+                lost++;
             }
             ctx.drawImage(next, 0, 0, 500, 250, (canvas.width/2)-(w/2), canvas.height*0.733, w, h/3);
             write();
+            ctx.fillText("Dealer: " + dtotal, (canvas.width/2)-w, (canvas.height/2)*0.25);
 
             for(let d=0; d<dhand.length; d++){
-                discard.push(dhand[0]);
+                discard.push(dhand[d]);
             }
             for(let c=0; c<phand.length; c++){
-                discard.push(phand[0]);
+                discard.push(phand[c]);
             }
             dhand.length = 0;
             phand.length = 0;
@@ -91,8 +99,7 @@ function start() {
         //ctx.fillText(canvas.width + " " + canvas.height, (canvas.width/2)*0.6, (canvas.height/2)*1.8);
         // deck and discard piles
         function write(){
-            ctx.fillText(deck.length + " " + discard.length, (canvas.width/2), (canvas.height/2)*1.8);
-            //ctx.fillText("Dealer: " + dtotal, (canvas.width/2)-w, (canvas.height/2)*0.25);
+            ctx.fillText(deck.length + " " + discard.length + "   Won: " + won + " Ties: " + ties + " Lost: " + lost, (canvas.width/2), (canvas.height/2)*1.8);
             ctx.fillText("Your hand: " + ptotal, (canvas.width/2)-w, (canvas.height/2)*0.89);
         }
 
@@ -115,6 +122,10 @@ function start() {
 
             if(ptotal > 21 && pacecount > 0){
                 ptotal -= pacecount*10;
+            }
+            if(ptotal > 21 && flag != "end"){
+                flag="end";
+                paint();
             }
         }
 
@@ -175,15 +186,16 @@ function start() {
         }
     }
     function draw() {
+        if(deck.length < 1){
+            for(let c=0; c<discard.length; c++){
+                deck.push(discard[c]);
+            }
+            discard.length = 0;
+        }
         let num = Math.floor(Math.random() * deck.length);
         let randomCard = deck[num];
         deck.splice(num, 1);
         return randomCard;
-    }
-    function shuffle() {
-        for(let q=0; q<discard.length; q++){
-            deck.push(discard.splice(discard[q], 1));
-        }
     }
     canvas.addEventListener('click', function(event) {
         const rect = canvas.getBoundingClientRect();
@@ -193,8 +205,8 @@ function start() {
         // draw a card if player hits
         if(flag == "sh" &&
             x >= (canvas.width/2)+55 && 
-            x <= ((canvas.width/2)+55)+w && 
-            y >= canvas.height*0.733 && 
+            x <= (canvas.width/2)+55+w && 
+            y >= (canvas.height*0.733) && 
             y <= (canvas.height*0.733)+(h/3)){
             
             phand.push(draw());
