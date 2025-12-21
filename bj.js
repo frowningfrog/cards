@@ -1,7 +1,11 @@
+stay.style.display = 'inline-block';
+more.style.display = 'inline-block';
+nr.style.display = 'none';
+
 function start() {
     const canvas = document.getElementById("canvas");
     canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+    canvas.height = window.innerHeight*0.80;
     ctx = canvas.getContext("2d");
     ctx.imageSmoothingEnabled = true;
     const rat = 1.452;
@@ -36,7 +40,7 @@ function start() {
 
         if(flag == "sh"){
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            buttons();
+            //buttons();
             if(begin == true){
                 roundstart();
                 begin = false;
@@ -80,9 +84,9 @@ function start() {
                 ctx.fillText("You're meh...", (canvas.width/2)*0.6, (canvas.height/2)*1.8);
                 lost++;
             }
-            ctx.drawImage(next, 0, 0, 500, 250, (canvas.width/2)-(w/2), canvas.height*0.733, w, h/3);
+            //ctx.drawImage(next, 0, 0, 500, 250, (canvas.width/2)-(w/2), canvas.height*0.733, w, h/3);
             write();
-            ctx.fillText("Dealer: " + dtotal, (canvas.width/2)-w, (canvas.height/2)*0.25);
+            ctx.fillText("Dealer: " + dtotal, (canvas.width/2)-w, (canvas.height/2)*0.275);
 
             for(let d=0; d<dhand.length; d++){
                 discard.push(dhand[d]);
@@ -99,21 +103,21 @@ function start() {
         //ctx.fillText(canvas.width + " " + canvas.height, (canvas.width/2)*0.6, (canvas.height/2)*1.8);
         // deck and discard piles
         function write(){
-            ctx.fillText(deck.length + " " + discard.length + "   Won: " + won + " Ties: " + ties + " Lost: " + lost, (canvas.width/2), (canvas.height/2)*1.8);
-            ctx.fillText("Your hand: " + ptotal, (canvas.width/2)-w, (canvas.height/2)*0.89);
+            ctx.fillText(/*deck.length + " " + discard.length + "   */"Won: " + won + " Tied: " + ties + " Lost: " + lost, (canvas.width/2)-(w*1.33), (canvas.height/2)*1.9);
+            ctx.fillText("Your hand: " + ptotal, (canvas.width/2)-w, (canvas.height/2)*1.13);
         }
 
-        // buttons
+        /* buttons
         function buttons() {
             ctx.drawImage(stand, 0, 0, 500, 250, (canvas.width/2)-55-w, canvas.height*0.733, w, h/3);
             ctx.drawImage(hit, 0, 0, 500, 250, (canvas.width/2)+55, canvas.height*0.733, w, h/3);
-        }
+        }*/
 
         function phanddisplay() {
             let pacecount = 0;
             ptotal = 0;
             for(let c=0; c<phand.length; c++){
-                ctx.drawImage(phand[c], 0, 0, 500, 726, form(phand)+space(phand)*c, (canvas.height/2)*0.9, w, h);
+                ctx.drawImage(phand[c], 0, 0, 500, 726, form(phand)+space(phand)*c, (canvas.height/2)*1.15, w, h);
                 if(phand[c].v == 11){
                     pacecount++;
                 }
@@ -124,6 +128,9 @@ function start() {
                 ptotal -= pacecount*10;
             }
             if(ptotal > 21 && flag != "end"){
+                stay.style.display = 'none';
+                more.style.display = 'none';
+                nr.style.display = 'inline-block';
                 flag="end";
                 paint();
             }
@@ -136,9 +143,15 @@ function start() {
             run();
             function run() {
                 let check = 0;
-                dhand.forEach(card => {
-                    check += card.v;
-                })
+                for(let d=0; d<dhand.length; d++){
+                    if(dhand[d].v == 11){
+                        dacecount++;
+                    }
+                    check += dhand[d].v;
+                }
+                if(check > 21 && dacecount > 0){
+                    check -= dacecount*10;
+                }
                 if(check<17 && flag=="end"){
                     dhand.push(draw());
                     run();
@@ -150,7 +163,7 @@ function start() {
                 }else{
                     f=0;
                 }
-                ctx.drawImage(dhand[c], f, 0, 500, 726, form(dhand)+space(dhand)*c, (canvas.height/2)/3.75, w, h);
+                ctx.drawImage(dhand[c], f, 0, 500, 726, form(dhand)+space(dhand)*c, (canvas.height/2)/3.3, w, h);
                 if(dhand[c].v == 11){
                     dacecount++;
                 }
@@ -197,7 +210,7 @@ function start() {
         deck.splice(num, 1);
         return randomCard;
     }
-    canvas.addEventListener('click', function(event) {
+    /*canvas.addEventListener('click', function(event) {
         const rect = canvas.getBoundingClientRect();
         const x = event.pageX - rect.left;
         const y = event.pageY - rect.top;
@@ -220,13 +233,40 @@ function start() {
             flag = "end";
         }else // next round
         if(flag == "end" && 
-            x >= (canvas.width/2)-(w/2) && 
-            x <= (canvas.width/2)+(w/2) && 
+            x >= (canvas.width/2)-250 && 
+            x <= (canvas.width/2)+250 && 
             y >= (canvas.height*0.733) && 
             y <= (canvas.height*0.733)+(h/3)){
 
             flag = "sh";
+        }else{
+            // do nothing
         }
         paint();
-    })
+    })*/
+
+    let standBtn = document.getElementById("stay");
+    let hitBtn = document.getElementById("more");
+    let nextRound = document.getElementById("nr");
+
+    standBtn.addEventListener("click", function() {
+        more.style.display = 'none';
+        stay.style.display = 'none';
+        nr.style.display = 'inline-block';
+        flag="end";
+        paint();
+    });
+
+    hitBtn.addEventListener("click", function() {
+        phand.push(draw());
+        paint();
+    });
+
+    nextRound.addEventListener("click", function() {
+        more.style.display = 'inline-block';
+        stay.style.display = 'inline-block';
+        nr.style.display = 'none';
+        flag="sh";
+        paint();
+    });
 }

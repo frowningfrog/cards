@@ -3,7 +3,24 @@ canvas {
     display: block; /* Remove extra space below canvas */
 }
 body, html {
-    margin: 0;
+    background-color: #193d3f;
+    margin: auto;
     padding: 0;
     overflow: hidden; /* Hide scroll bars */
+}
+div {
+    display: flex;
+    justify-content: center;
+}
+button {
+    font-size: 5em;
+    background-color: goldenrod;
+    border: .1em solid black;
+    width: 3.3em;
+}
+#nr {
+    width: 6.6em;
+}
+span {
+    width: 3em;
 }
