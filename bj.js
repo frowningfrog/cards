@@ -1,7 +1,3 @@
-stay.style.display = 'inline-block';
-more.style.display = 'inline-block';
-nr.style.display = 'none';
-
 function start() {
     const canvas = document.getElementById("canvas");
     canvas.width = window.innerWidth;
@@ -22,6 +18,7 @@ function start() {
     let lost = 0;
 
     let flag = "sh";
+    let wait = "true";
 
     let textsize = 33;
     if(canvas.width < 1000 && canvas.height > 1000){
@@ -31,6 +28,13 @@ function start() {
     ctx.fillStyle = "orangered";
 
     let begin = true;
+
+    nr.style.top = "10000px";
+    nr.style.left = (canvas.width/2)-nr.width/2+"px";
+    stay.style.top = canvas.height+"px";
+    more.style.top = canvas.height+"px";
+    stay.style.left = (canvas.width/2)-333+"px";
+    more.style.left = (canvas.width/2)+75+"px";
     
     paint();
 
@@ -38,80 +42,92 @@ function start() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         dtotal = 0;
 
+        if(ptotal > 21 && flag != "end"){
+            stay.style.display = 'none';
+            more.style.display = 'none';
+            nr.style.display = 'inline-block';
+            flag="end";
+        }
+
         if(flag == "sh"){
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            //buttons();
+            //ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
             if(begin == true){
                 roundstart();
                 begin = false;
             }
 
-            dhanddisplay();
-            phanddisplay();
-            write();
+            /*dhanddisplay();
+            phanddisplay();*/
+            
+            ctx.fillText("Your hand: " + ptotal, (canvas.width/2)-w, (canvas.height/2)*1.13);
         }else 
         if(flag == "end"){
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            //ctx.clearRect(0, 0, canvas.width, canvas.height);
             
             dhanddisplay();
             phanddisplay();
 
             if(ptotal == dtotal){
                 ctx.fillText("Push", (canvas.width/2)*0.6, (canvas.height/2)*1.8);
-                ties++;
+                if(wait==true){
+                    ties++;
+                } wait = false;
             }else
             if(ptotal > 21){
                 ctx.fillText("You're meh...", (canvas.width/2)*0.6, (canvas.height/2)*1.8);
-                lost++;
+                if(wait==true){
+                    lost++;
+                } wait = false;
             }else
             if(ptotal == 21 && dtotal != 21){
                 ctx.fillText("You won1", (canvas.width/2)*0.6, (canvas.height/2)*1.8);
-                won++;
+                if(wait==true){
+                    won++;
+                } wait = false;
             }else
             if(ptotal != 21 && dtotal == 21){
                 ctx.fillText("You're meh...", (canvas.width/2)*0.6, (canvas.height/2)*1.8);
-                lost++;
+                if(wait==true){
+                    lost++;
+                } wait = false;
             }else
             if(ptotal <= 21 && dtotal > 21){
                 ctx.fillText("You won2", (canvas.width/2)*0.6, (canvas.height/2)*1.8);
-                won++;
+                if(wait==true){
+                    won++;
+                } wait = false;
             }else
             if(ptotal <= 21 && dtotal < 21 &&
                 ptotal > dtotal){
                 ctx.fillText("You won3", (canvas.width/2)*0.6, (canvas.height/2)*1.8);
-                won++;
+                if(wait==true){
+                    won++;
+                } wait = false;
             }else{
                 ctx.fillText("You're meh...", (canvas.width/2)*0.6, (canvas.height/2)*1.8);
-                lost++;
+                if(wait==true){
+                    lost++;
+                } wait = false;
             }
             //ctx.drawImage(next, 0, 0, 500, 250, (canvas.width/2)-(w/2), canvas.height*0.733, w, h/3);
-            write();
             ctx.fillText("Dealer: " + dtotal, (canvas.width/2)-w, (canvas.height/2)*0.275);
-
-            for(let d=0; d<dhand.length; d++){
-                discard.push(dhand[d]);
-            }
-            for(let c=0; c<phand.length; c++){
-                discard.push(phand[c]);
-            }
-            dhand.length = 0;
-            phand.length = 0;
-            roundstart();
+            ctx.fillText("Your hand: " + ptotal, (canvas.width/2)-w, (canvas.height/2)*1.13);
         }
 
         // canvas dimensions
         //ctx.fillText(canvas.width + " " + canvas.height, (canvas.width/2)*0.6, (canvas.height/2)*1.8);
-        // deck and discard piles
-        function write(){
-            ctx.fillText(/*deck.length + " " + discard.length + "   */"Won: " + won + " Tied: " + ties + " Lost: " + lost, (canvas.width/2)-(w*1.33), (canvas.height/2)*1.9);
-            ctx.fillText("Your hand: " + ptotal, (canvas.width/2)-w, (canvas.height/2)*1.13);
-        }
-
+        
         /* buttons
         function buttons() {
             ctx.drawImage(stand, 0, 0, 500, 250, (canvas.width/2)-55-w, canvas.height*0.733, w, h/3);
             ctx.drawImage(hit, 0, 0, 500, 250, (canvas.width/2)+55, canvas.height*0.733, w, h/3);
         }*/
+
+        ctx.fillText(deck.length + " " + discard.length + "   Won: " + won + " Tied: " + ties + " Lost: " + lost, (canvas.width/2)-(w*1.33), (canvas.height/2)*1.9);
+
+        dhanddisplay();
+        phanddisplay();
 
         function phanddisplay() {
             let pacecount = 0;
@@ -127,13 +143,13 @@ function start() {
             if(ptotal > 21 && pacecount > 0){
                 ptotal -= pacecount*10;
             }
-            if(ptotal > 21 && flag != "end"){
+            /*if(ptotal > 21 && flag != "end"){
                 stay.style.display = 'none';
                 more.style.display = 'none';
                 nr.style.display = 'inline-block';
                 flag="end";
                 paint();
-            }
+            }*/
         }
 
         function dhanddisplay() {
@@ -191,13 +207,9 @@ function start() {
             }
         }
 
-        function roundstart() {
-            dhand.push(draw());
-            phand.push(draw());
-            dhand.push(draw());
-            phand.push(draw());
-        }
+        requestAnimationFrame(paint);
     }
+
     function draw() {
         if(deck.length < 1){
             for(let c=0; c<discard.length; c++){
@@ -210,6 +222,14 @@ function start() {
         deck.splice(num, 1);
         return randomCard;
     }
+
+    function roundstart() {
+        dhand.push(draw());
+        phand.push(draw());
+        dhand.push(draw());
+        phand.push(draw());
+    }
+
     /*canvas.addEventListener('click', function(event) {
         const rect = canvas.getBoundingClientRect();
         const x = event.pageX - rect.left;
@@ -250,23 +270,31 @@ function start() {
     let nextRound = document.getElementById("nr");
 
     standBtn.addEventListener("click", function() {
-        more.style.display = 'none';
-        stay.style.display = 'none';
-        nr.style.display = 'inline-block';
+        more.style.top = "10000px";
+        stay.style.top = "10000px";
+        nr.style.top = canvas.height+"px";
         flag="end";
-        paint();
+        wait = true;
     });
 
     hitBtn.addEventListener("click", function() {
         phand.push(draw());
-        paint();
     });
 
     nextRound.addEventListener("click", function() {
-        more.style.display = 'inline-block';
-        stay.style.display = 'inline-block';
-        nr.style.display = 'none';
+        more.style.top = canvas.height+"px";
+        stay.style.top = canvas.height+"px";
+        nr.style.top = "10000px";
+        for(let d=0; d<dhand.length; d++){
+            discard.push(dhand[d]);
+        }
+        for(let c=0; c<phand.length; c++){
+            discard.push(phand[c]);
+        }
         flag="sh";
-        paint();
+        dhand.length = 0;
+        phand.length = 0;
+        roundstart();
+        flag="sh";
     });
 }
