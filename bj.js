@@ -41,16 +41,13 @@ function start() {
     function paint() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         dtotal = 0;
-
-        if(ptotal > 21 && flag != "end"){
-            stay.style.display = 'none';
-            more.style.display = 'none';
-            nr.style.display = 'inline-block';
-            flag="end";
-        }
+        ctx.fillText(flag, (canvas.width/2)*0.6, (canvas.height/2)*1.8);
 
         if(flag == "sh"){
             //ctx.clearRect(0, 0, canvas.width, canvas.height);
+            more.style.top = canvas.height+"px";
+            stay.style.top = canvas.height+"px";
+            nr.style.top = "10000px";
             
             if(begin == true){
                 roundstart();
@@ -64,7 +61,9 @@ function start() {
         }else 
         if(flag == "end"){
             //ctx.clearRect(0, 0, canvas.width, canvas.height);
-            
+            more.style.top = "10000px";
+            stay.style.top = "10000px";
+            nr.style.top = canvas.height+"px";
             dhanddisplay();
             phanddisplay();
 
@@ -142,6 +141,9 @@ function start() {
 
             if(ptotal > 21 && pacecount > 0){
                 ptotal -= pacecount*10;
+            }
+            if(ptotal > 21 && flag != "end"){
+                flag="end";
             }
             /*if(ptotal > 21 && flag != "end"){
                 stay.style.display = 'none';
@@ -270,9 +272,6 @@ function start() {
     let nextRound = document.getElementById("nr");
 
     standBtn.addEventListener("click", function() {
-        more.style.top = "10000px";
-        stay.style.top = "10000px";
-        nr.style.top = canvas.height+"px";
         flag="end";
         wait = true;
     });
@@ -291,7 +290,6 @@ function start() {
         for(let c=0; c<phand.length; c++){
             discard.push(phand[c]);
         }
-        flag="sh";
         dhand.length = 0;
         phand.length = 0;
         roundstart();
